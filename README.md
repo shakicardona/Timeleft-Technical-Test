@@ -145,3 +145,19 @@ To verify TypeScript typing and code cleanliness conventions, run the linter:
 ```bash
 npm run lint
 ```
+
+## Anything Else That You Feel Is Important to Include
+
+### 1. Roadmap & Architecture Summary
+This project follows a clean, decoupled architecture built on SOLID principles:
+* **Presentation Layer**: Consists of React Native components `index.tsx`, `event/[id].tsx` and visual widgets `filter-panel.tsx`, `stats-bar.tsx` designed to render dynamic layouts reactively.
+* **Domain Layer**: Separated logic into a custom `useEvents.ts` hook that manages active states (search query, selected city, selected status, and sort filters) and performs client-side data operations. Pure formatters for dates and capacity statuses are encapsulated in `formatters.ts`.
+* **Data Layer**: Integrates client-side in-memory caching in the API service (`eventsApi.ts`) with a 5-minute invalidation TTL, maximizing UX navigation speed and minimizing network consumption.
+* **UI Implementation Roadmap**:
+  1. **Main Screen & Reusable Components**: Built the browse view container utilizing a performance-optimized list rendering modular cards (`event-card.tsx`), badges (`availability-badge.tsx`), and skeleton loaders.
+  2. **Navigation & Dynamic Details**: Implemented file-based dynamic routing (`event/[id].tsx`) using Expo Router to handle transition states and show full details for selected events.
+  3. **Interactive Search & Filtering**: Developed the collapsible filter drawer (`filter-panel.tsx` / `search-bar.tsx`) for searching and combining multi-select cities, statuses, and sorting preferences.
+  4. **Hybrid Event Statistics**: Integrated the reactive statistics banner (`stats-bar.tsx`) at the top of the feed to provide immediate visual feedback of both filtered and total database counts.
+
+### 2. Task Completion & Commit History
+The step-by-step progress and implementation stages of this technical test have been documented incrementally. You can review the complete chronological progression of task completions, refactoring steps, and documentation updates directly through the Git commit history on GitHub (e.g., via commits on the `docs/delivery` branch).
