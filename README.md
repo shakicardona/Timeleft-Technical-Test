@@ -76,6 +76,10 @@ If given more time, the following improvements would be prioritized:
 3. **Geolocation-Based Default Filtering**:
    * Integrate device location services (using `expo-location` or IP-based geolocation) to automatically select and filter the event feed by the user's current city/country on launch. For example, users opening the app in Madrid would see Spanish events by default, removing the friction of manual filtering.
 
+4. **Differentiating Filter Types (UX Improvement)**:
+   * Introduce visual styling distinctions between multiple-choice filters (like "Status") and single-choice filters (like "Type" or "Sort By"). Because both are currently represented by identical chips, it can be ambiguous to the user whether a section allows multiple selections or is mutually exclusive. Adding clear indicators (such as checkbox icons inside multi-select chips or radio-button markers/segmented controls for single-select options) would greatly improve the user experience.
+
+
 ## Testing Strategy & Priorities
 
 Testing is optional for this exercise, and automated tests have not been implemented. Below is our proposed testing methodology, detailing how we would approach testing this React Native / Expo application and what we would prioritize.
