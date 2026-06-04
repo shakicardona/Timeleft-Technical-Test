@@ -2420,3 +2420,56 @@ Testing is optional according to the brief, but as a senior practice, we should 
 Absolutely. Documenting a tiered testing plan (unit testing logic, component mounting checks, and E2E automation boundaries) is a standard senior practice.
 
 ---
+
+### User (Message #69)
+I want to improve the filter panel, I want smaller components.@[/Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-panel.tsx:L50-L66] this should be a dropdown filter component
+
+---
+
+### AI Assistant
+I have refactored the filter panel into smaller, reusable components, simplifying its structure and improving overall maintainability. 
+
+### Summary of Changes
+
+1. **Created New Subcomponents**:
+   - [`dropdown-filter.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/dropdown-filter.tsx): A generic, type-safe dropdown component that manages its open/close state internally.
+   - [`filter-chip.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-chip.tsx): A touchable filter chip component.
+   - [`filter-section.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-section.tsx): A container component that renders standard section headers (e.g., "City", "Status", "Sort By").
+
+2. **Simplified the Filter Panel**:
+   - Refactored [`filter-panel.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-panel.tsx) to integrate the new subcomponents. This reduced the file from 317 lines down to 118 lines (a **60%+ reduction**) and eliminated redundant states and styles.
+
+3. **Verification**:
+   - Ran `npm run lint` successfully with **no errors or warnings**.
+   - Created the [`walkthrough.md`](file:///Users/mar/.gemini/antigravity-ide/brain/58eb6734-7958-4be0-ac27-ae34df9e1ce9/walkthrough.md) artifact to document the refactored code and verification process.
+
+---
+
+### User (Message #70)
+@[/Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-panel.tsx:L61-L81] this is a multiple choice filtering
+
+---
+
+### User (Message #71)
+@[/Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-panel.tsx:L84-L100] this is a unique choice filter
+
+---
+
+### AI Assistant
+I have implemented reusable components for both multiple-choice and unique/single-choice filtering!
+
+### Refactoring Details
+1. **Created [`chip-select-filter.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/chip-select-filter.tsx)**:
+   - **`MultiSelectChips`**: A reusable multiple-choice filter component that manages array insertion/removal of selected values (used for the **Status** filter).
+   - **`SingleSelectChips`**: A reusable unique-choice filter component that selects a single option with an optional clear/deselect action (used for the **Type** and **Sort By** filters).
+
+2. **Cleaned up [`filter-panel.tsx`](file:///Users/mar/Developer/ReactNative/timeleft-technical-test/src/components/filter-panel.tsx)**:
+   - Replaced the inline status filtering mapping (multiple-choice) and type/sort mappings (single-choice) with the new modular chip components.
+   - The entire filter panel is now extremely concise (141 lines), with zero inline mapping logic or complex state management.
+
+3. **Verification**:
+   - The Expo linter ran successfully with no warnings or type errors. 
+   - Documented the updates in the [`walkthrough.md`](file:///Users/mar/.gemini/antigravity-ide/brain/58eb6734-7958-4be0-ac27-ae34df9e1ce9/walkthrough.md) artifact.
+
+---
+
