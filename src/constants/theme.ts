@@ -9,18 +9,22 @@ import { Platform } from 'react-native';
 
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    text: '#0F172A', // Slate 900
+    background: '#F8FAFC', // Slate 50 (Soft off-white screen background)
+    backgroundElement: '#FFFFFF', // Pure White for Cards
+    backgroundSelected: '#E2E8F0', // Slate 200
+    textSecondary: '#64748B', // Slate 500
+    border: '#E2E8F0', // Slate 200
+    primary: '#3C87F7', // Timeleft Blue
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    text: '#F8FAFC', // Slate 50
+    background: '#0F172A', // Slate 900
+    backgroundElement: '#1E293B', // Slate 800 (Slate card background)
+    backgroundSelected: '#334155', // Slate 700
+    textSecondary: '#94A3B8', // Slate 400
+    border: '#334155', // Slate 700
+    primary: '#60A5FA', // Lighter Blue for Dark Mode readability
   },
 } as const;
 
