@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { getEvents } from '@/api/eventsApi';
 import { AvailabilityBadge } from '@/components/availability-badge';
 import { Header } from '@/components/header';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { getEvents } from '@/api/eventsApi';
 import { Event } from '@/types/event';
 import { formatEventDate, getEventAvailability } from '@/utils/formatters';
 
@@ -110,16 +110,16 @@ export default function EventDetailsScreen() {
                 <Header title="Event Details" showBackButton={true} titleType="default" />
 
                 <View style={styles.contentContainer}>
-                    {/* Event Banner Card */}
-                    <ThemedView type="backgroundElement" style={[styles.mainCard, { borderColor: theme.border }]}>
-                        {/* City & Zone */}
-                        <ThemedText type="smallBold" style={[styles.cityText, { color: theme.primary }]}>
-                            {event.zone.city.name} • {event.zone.name}
-                        </ThemedText>
-
+                    {/* Event Details Info */}
+                    <View style={styles.infoSection}>
                         {/* Title (Event Type) */}
                         <ThemedText type="subtitle" style={styles.titleText}>
                             {event.type.charAt(0).toUpperCase() + event.type.slice(1)} Night
+                        </ThemedText>
+
+                        {/* City & Zone */}
+                        <ThemedText type="smallBold" style={[styles.cityText, { color: theme.primary }]}>
+                            {event.zone.city.name} • {event.zone.name}
                         </ThemedText>
 
                         <View style={styles.divider} />
@@ -149,10 +149,10 @@ export default function EventDetailsScreen() {
                                 </Text>
                             </View>
                         </View>
-                    </ThemedView>
+                    </View>
 
                     {/* Booking & Capacity Gauge */}
-                    <ThemedView type="backgroundElement" style={[styles.mainCard, { borderColor: theme.border, marginTop: Spacing.three }]}>
+                    <View style={styles.capacitySection}>
                         <View style={styles.capacityHeader}>
                             <ThemedText type="default" style={{ fontWeight: 'bold' }}>
                                 Availability
@@ -174,11 +174,11 @@ export default function EventDetailsScreen() {
                                 {event.booked} out of {event.capacity} seats booked ({availability.percentage}%)
                             </ThemedText>
                         </View>
-                    </ThemedView>
+                    </View>
                 </View>
 
                 {/* Footer Booking CTA */}
-                <ThemedView type="backgroundElement" style={[styles.footer, { borderTopColor: theme.border }]}>
+                <View style={styles.footer}>
                     <TouchableOpacity
                         activeOpacity={0.8}
                         disabled={ctaDisabled}
@@ -194,7 +194,7 @@ export default function EventDetailsScreen() {
                             {ctaText}
                         </Text>
                     </TouchableOpacity>
-                </ThemedView>
+                </View>
             </SafeAreaView>
         </ThemedView>
     );
@@ -229,20 +229,21 @@ const styles = StyleSheet.create({
         paddingTop: Spacing.two,
         paddingBottom: Spacing.six,
     },
-    mainCard: {
-        padding: Spacing.four,
-        borderRadius: Spacing.two,
-        borderWidth: 1,
+    infoSection: {
+        marginBottom: Spacing.four,
+    },
+    capacitySection: {
+        marginTop: Spacing.two,
     },
     cityText: {
         textTransform: 'uppercase',
-        marginBottom: Spacing.one,
+        marginBottom: Spacing.three,
     },
     titleText: {
         fontWeight: 'bold',
         fontSize: 24,
         lineHeight: 32,
-        marginBottom: Spacing.three,
+        marginBottom: Spacing.one,
     },
     divider: {
         height: 1,
@@ -290,7 +291,6 @@ const styles = StyleSheet.create({
     },
     footer: {
         padding: Spacing.four,
-        borderTopWidth: 1,
     },
     ctaButton: {
         height: 48,
