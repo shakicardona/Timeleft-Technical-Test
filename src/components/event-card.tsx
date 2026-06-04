@@ -42,7 +42,7 @@ export function EventCard({ event }: EventCardProps) {
 
                 {/* Event Type & Date */}
                 <ThemedText type="default" style={styles.eventType}>
-                    {event.type} Night
+                    {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                 </ThemedText>
                 <ThemedText type="small" themeColor="textSecondary" style={styles.eventDate}>
                     {formatEventDate(event.date)}
