@@ -13,7 +13,7 @@ export function useEvents() {
     // Filter & Sort States
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCity, setSelectedCity] = useState<string | null>(null);
-    const [selectedStatus, setSelectedStatus] = useState<EventStatus | null>(null);
+    const [selectedStatuses, setSelectedStatuses] = useState<EventStatus[]>(['upcoming', 'live']);
     const [selectedType, setSelectedType] = useState<EventType | null>(null);
     const [sortBy, setSortBy] = useState<SortOption>('date-asc');
 
@@ -47,7 +47,7 @@ export function useEvents() {
     const resetFilters = useCallback(() => {
         setSearchQuery('');
         setSelectedCity(null);
-        setSelectedStatus(null);
+        setSelectedStatuses(['upcoming', 'live']);
         setSelectedType(null);
         setSortBy('date-asc');
     }, []);
@@ -62,7 +62,7 @@ export function useEvents() {
         return Array.from(new Set(types)).sort();
     }, [events]);
 
-    const statusStats = useMemo(() => {
+    const globalStats = useMemo(() => {
         const stats = { total: events.length, upcoming: 0, live: 0, past: 0 };
         events.forEach(e => {
             if (e.status === 'upcoming') stats.upcoming++;
@@ -71,6 +71,8 @@ export function useEvents() {
         });
         return stats;
     }, [events]);
+
+
 
     // Filter & Sort list 
     const filteredAndSortedEvents = useMemo(() => {
@@ -82,8 +84,8 @@ export function useEvents() {
         }
 
         // Filter by Status
-        if (selectedStatus) {
-            result = result.filter(e => e.status === selectedStatus);
+        if (selectedStatuses.length > 0) {
+            result = result.filter(e => selectedStatuses.includes(e.status));
         }
 
         // Filter by Type
@@ -127,7 +129,17 @@ export function useEvents() {
         });
 
         return result;
-    }, [events, searchQuery, selectedCity, selectedStatus, selectedType, sortBy]);
+    }, [events, searchQuery, selectedCity, selectedStatuses, selectedType, sortBy]);
+
+    const filteredStats = useMemo(() => {
+        const stats = { total: filteredAndSortedEvents.length, upcoming: 0, live: 0, past: 0 };
+        filteredAndSortedEvents.forEach(e => {
+            if (e.status === 'upcoming') stats.upcoming++;
+            else if (e.status === 'live') stats.live++;
+            else if (e.status === 'past') stats.past++;
+        });
+        return stats;
+    }, [filteredAndSortedEvents]);
 
     return {
         events: filteredAndSortedEvents,
@@ -140,15 +152,16 @@ export function useEvents() {
         // Dynamic Filter lists
         uniqueCities,
         uniqueTypes,
-        statusStats,
+        globalStats,
+        filteredStats,
 
         // Filter & Sort state & controllers
         searchQuery,
         setSearchQuery,
         selectedCity,
         setSelectedCity,
-        selectedStatus,
-        setSelectedStatus,
+        selectedStatuses,
+        setSelectedStatuses,
         selectedType,
         setSelectedType,
         sortBy,

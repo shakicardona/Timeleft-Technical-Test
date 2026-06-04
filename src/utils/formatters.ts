@@ -24,7 +24,7 @@ export function formatEventDate(dateString: string): string {
             return `${parts[0]}, ${parts[1]} • ${parts[2]}`;
         }
         return formatter.format(date);
-    } catch (error) {
+    } catch {
         return dateString;
     }
 }
