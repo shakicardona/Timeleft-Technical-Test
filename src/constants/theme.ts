@@ -16,6 +16,7 @@ export const Colors = {
     textSecondary: '#64748B', // Slate 500
     border: '#E2E8F0', // Slate 200
     primary: '#3C87F7', // Timeleft Blue
+    error: '#E53E3E', // Warning Red
   },
   dark: {
     text: '#F8FAFC', // Slate 50
@@ -25,6 +26,7 @@ export const Colors = {
     textSecondary: '#94A3B8', // Slate 400
     border: '#334155', // Slate 700
     primary: '#60A5FA', // Lighter Blue for Dark Mode readability
+    error: '#FC8181', // Pastel Red for Dark Mode readability
   },
 } as const;
 
