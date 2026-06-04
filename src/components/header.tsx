@@ -11,6 +11,7 @@ interface HeaderProps {
     showBackButton?: boolean;
     onBackPress?: () => void;
     titleType?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle';
+    rightElement?: React.ReactNode;
 }
 
 export function Header({
@@ -18,6 +19,7 @@ export function Header({
     showBackButton = false,
     onBackPress,
     titleType = 'subtitle',
+    rightElement,
 }: HeaderProps) {
     const router = useRouter();
     const theme = useTheme();
@@ -44,7 +46,7 @@ export function Header({
                 <ThemedText type={titleType} style={styles.headerTitle}>
                     {title}
                 </ThemedText>
-                <View style={styles.headerPlaceholder} />
+                {rightElement ? rightElement : <View style={styles.headerPlaceholder} />}
             </View>
         );
     }
@@ -54,12 +56,16 @@ export function Header({
             <ThemedText type={titleType} style={styles.title}>
                 {title}
             </ThemedText>
+            {rightElement}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         paddingHorizontal: Spacing.four,
         paddingVertical: Spacing.three,
     },

@@ -1,7 +1,7 @@
 
 export type EventStatus = 'past' | 'upcoming' | 'live';
 
-export type EventType = 'coffee' | 'dinner' | 'brunch' | 'food';
+export type EventType = 'coffee' | 'dinner' | 'brunch' | 'food' | 'drink' | 'run';
 
 export interface Country {
     readonly id: number;
