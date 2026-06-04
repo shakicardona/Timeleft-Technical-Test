@@ -13,7 +13,7 @@ interface FilterPanelProps {
     uniqueCities: string[];
     selectedCity: string | null;
     setSelectedCity: (city: string | null) => void;
-    uniqueTypes: string[];
+    uniqueTypes: EventType[];
     selectedType: EventType | null;
     setSelectedType: (type: EventType | null) => void;
     selectedStatuses: EventStatus[];

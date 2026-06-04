@@ -13,6 +13,7 @@ import { EventCard } from '@/components/event-card';
 import { FilterPanel } from '@/components/filter-panel';
 import { Header } from '@/components/header';
 import { SearchBar } from '@/components/search-bar';
+import { StatsBar } from '@/components/stats-bar';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
@@ -39,7 +40,9 @@ export default function HomeScreen() {
     setSelectedStatuses,
     sortBy,
     setSortBy,
-    resetFilters
+    resetFilters,
+    globalStats,
+    filteredStats
   } = useEvents();
 
   const [showFilters, setShowFilters] = useState(false);
@@ -60,7 +63,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.centerContainer}>
         <ThemedText type="subtitle" style={{ color: theme.error }}>Error</ThemedText>
         <ThemedText style={{ marginVertical: Spacing.two, textAlign: 'center' }}>{error}</ThemedText>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.btnPrimary, { backgroundColor: theme.primary }]}
           onPress={() => refresh()}
         >
@@ -73,7 +76,7 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-        
+
         {/* Header Title */}
         <Header
           title="Discover Events"
@@ -129,6 +132,12 @@ export default function HomeScreen() {
           />
         </View>
 
+        {/* High-Level Stats Bar */}
+        <StatsBar
+          globalStats={globalStats}
+          filteredStats={filteredStats}
+        />
+
         {/* Scrollable Event List */}
         <FlatList
           data={events}
@@ -138,7 +147,7 @@ export default function HomeScreen() {
           refreshing={isRefreshing}
           onRefresh={refresh}
           renderItem={({ item }) => <EventCard event={item} />}
-          
+
           // Empty State
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
@@ -148,7 +157,7 @@ export default function HomeScreen() {
               <ThemedText type="small" themeColor="textSecondary" style={styles.emptyText}>
                 Try adjusting your search query or clear the search bar.
               </ThemedText>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[styles.btnPrimary, { backgroundColor: theme.primary }]}
                 onPress={() => setSearchQuery('')}
               >

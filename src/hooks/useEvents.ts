@@ -62,7 +62,7 @@ export function useEvents() {
         return Array.from(new Set(types)).sort();
     }, [events]);
 
-    const statusStats = useMemo(() => {
+    const globalStats = useMemo(() => {
         const stats = { total: events.length, upcoming: 0, live: 0, past: 0 };
         events.forEach(e => {
             if (e.status === 'upcoming') stats.upcoming++;
@@ -71,6 +71,8 @@ export function useEvents() {
         });
         return stats;
     }, [events]);
+
+
 
     // Filter & Sort list 
     const filteredAndSortedEvents = useMemo(() => {
@@ -129,6 +131,16 @@ export function useEvents() {
         return result;
     }, [events, searchQuery, selectedCity, selectedStatuses, selectedType, sortBy]);
 
+    const filteredStats = useMemo(() => {
+        const stats = { total: filteredAndSortedEvents.length, upcoming: 0, live: 0, past: 0 };
+        filteredAndSortedEvents.forEach(e => {
+            if (e.status === 'upcoming') stats.upcoming++;
+            else if (e.status === 'live') stats.live++;
+            else if (e.status === 'past') stats.past++;
+        });
+        return stats;
+    }, [filteredAndSortedEvents]);
+
     return {
         events: filteredAndSortedEvents,
         rawEvents: events,
@@ -140,7 +152,8 @@ export function useEvents() {
         // Dynamic Filter lists
         uniqueCities,
         uniqueTypes,
-        statusStats,
+        globalStats,
+        filteredStats,
 
         // Filter & Sort state & controllers
         searchQuery,
