@@ -59,6 +59,10 @@ The detailed instructions and requirements for this test can be found in the [Ti
 * **Decision**: We chose to build the application using Expo SDK 55 instead of the newly released SDK 56.
 * **Trade-Off**: Expo SDK 56 was released on May 21, 2026 (only a few days ago). Opting for Expo SDK 55 ensures platform stability, predictable native builds, and guarantees library compatibility (especially for core layout/animation dependencies like `react-native-reanimated`), avoiding the risks of early adoption bugs.
 
+### 6. Client-Side API Caching (In-Memory Cache)
+* **Decision**: Implemented a module-scoped in-memory cache (`cachedEvents` and `lastFetchedTime`) with a 5-minute TTL inside the API service.
+* **Trade-Off**: Since the database size varies and can grow up to 1,000+ events per city, fetching from the network on every screen transition (e.g., navigating back and forth between lists and detail screens) would introduce latency and waste user data. Caching results makes detail-to-list transitions instantaneous, while the 5-minute TTL guarantees events stay updated. We also support a `forceRefresh` option for pull-to-refresh to completely bypass the cache.
+
 ## Future Improvements (With More Time)
 
 If given more time, the following improvements would be prioritized:
@@ -153,11 +157,13 @@ This project follows a clean, decoupled architecture built on SOLID principles:
 * **Presentation Layer**: Consists of React Native components `index.tsx`, `event/[id].tsx` and visual widgets `filter-panel.tsx`, `stats-bar.tsx` designed to render dynamic layouts reactively.
 * **Domain Layer**: Separated logic into a custom `useEvents.ts` hook that manages active states (search query, selected city, selected status, and sort filters) and performs client-side data operations. Pure formatters for dates and capacity statuses are encapsulated in `formatters.ts`.
 * **Data Layer**: Integrates client-side in-memory caching in the API service (`eventsApi.ts`) with a 5-minute invalidation TTL, maximizing UX navigation speed and minimizing network consumption.
-* **UI Implementation Roadmap**:
-  1. **Main Screen & Reusable Components**: Built the browse view container utilizing a performance-optimized list rendering modular cards (`event-card.tsx`), badges (`availability-badge.tsx`), and skeleton loaders.
-  2. **Navigation & Dynamic Details**: Implemented file-based dynamic routing (`event/[id].tsx`) using Expo Router to handle transition states and show full details for selected events.
-  3. **Interactive Search & Filtering**: Developed the collapsible filter drawer (`filter-panel.tsx` / `search-bar.tsx`) for searching and combining multi-select cities, statuses, and sorting preferences.
-  4. **Hybrid Event Statistics**: Integrated the reactive statistics banner (`stats-bar.tsx`) at the top of the feed to provide immediate visual feedback of both filtered and total database counts.
+* **Implementation Roadmap**:
+  1. **API Analysis & Schema Verification**: Analyzed the JSON payload structure and properties returned by the CDN endpoint using Postman to verify data types and map the domain models accurately.
+     ![Postman API Verification](assets/images/postman_screenshot.png)
+  2. **Main Screen & Reusable Components**: Built the browse view container utilizing a performance-optimized list rendering modular cards (`event-card.tsx`), badges (`availability-badge.tsx`), and skeleton loaders.
+  3. **Navigation & Dynamic Details**: Implemented file-based dynamic routing (`event/[id].tsx`) using Expo Router to handle transition states and show full details for selected events.
+  4. **Interactive Search & Filtering**: Developed the collapsible filter drawer (`filter-panel.tsx` / `search-bar.tsx`) for searching and combining multi-select cities, statuses, and sorting preferences.
+  5. **Hybrid Event Statistics**: Integrated the reactive statistics banner (`stats-bar.tsx`) at the top of the feed to provide immediate visual feedback of both filtered and total database counts.
 
 ### 2. Task Completion & Commit History
 The step-by-step progress and implementation stages of this technical test have been documented incrementally. You can review the complete chronological progression of task completions, refactoring steps, and documentation updates directly through the Git commit history on GitHub (e.g., via commits on the `docs/delivery` branch).
