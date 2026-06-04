@@ -8,7 +8,8 @@
     "scheme": "timelefttechnicaltest",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.mar.cardona.timeleft-technical-test"
     },
     "android": {
       "adaptiveIcon": {
